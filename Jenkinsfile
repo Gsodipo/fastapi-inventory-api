@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/Gsodipo/fastapi-inventory-api' // Replace with your real repo
+                git branch: 'main', url: 'https://github.com/Gsodipo/fastapi-inventory-api'
             }
         }
 
