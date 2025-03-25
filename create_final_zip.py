@@ -12,7 +12,7 @@ def zip_folder(folder_path, zip_name):
                 file_path = os.path.join(root, file)
                 arcname = os.path.relpath(file_path, folder_path)
                 zipf.write(file_path, arcname)
-    print(f"✅ Zipped source folder to: {zip_name}")
+    print(f"Zipped source folder to: {zip_name}")
 
 # Set filenames
 timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
@@ -41,7 +41,7 @@ with zipfile.ZipFile(final_zip, 'w') as zipf:
     for file in files_to_include:
         if os.path.exists(file):
             zipf.write(file)
-            print(f"📦 Added: {file}")
+            print(f" Added: {file}")
         else:
             print(f" Missing file, not added: {file}")
 
