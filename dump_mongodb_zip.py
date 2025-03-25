@@ -30,4 +30,4 @@ with zipfile.ZipFile(zip_filename, "w") as zipf:
 # Clean up JSON file
 os.remove(json_filename)
 
-print(f"✅ Created ZIP file: {zip_filename}")
+print(f"Created ZIP file: {zip_filename}")
