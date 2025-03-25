@@ -45,6 +45,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: 'unit_test_results.pdf', fingerprint: true
+            archiveArtifacts artifacts: 'complete-*.zip', fingerprint: true
         }
     }
 }
