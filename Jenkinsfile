@@ -19,11 +19,20 @@ pipeline {
             }
         }
 
-        stage('Run Unit Tests & Generate PDF') {
+        stage('Run Unit Tests & Generate PDF') 
+        {
             steps {
                 bat '%VENV%\\Scripts\\activate && python generate_test_pdf.py'
             }
         }
+
+        stage('Dump MongoDB and Zip') 
+        {
+            steps {
+                bat 'venv\\Scripts\\activate && python dump_mongodb_zip.py'
+            }
+        }
+
     }
 
     post {
