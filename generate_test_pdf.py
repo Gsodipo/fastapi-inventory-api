@@ -21,4 +21,4 @@ pdf.multi_cell(0, 8, result.stdout)
 
 # Save PDF
 pdf.output("unit_test_results.pdf")
-print("✅ PDF generated with test results!")
+print("PDF generated with test results!")
