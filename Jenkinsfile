@@ -14,7 +14,7 @@ pipeline {
 
         stage('Set up Virtual Env and Install Dependencies') {
             steps {
-                bat 'python -m venv %VENV%'
+                bat 'C:\\Users\\B00134339\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -m venv %VENV%'
                 bat '%VENV%\\Scripts\\activate && pip install -r requirements.txt'
             }
         }
