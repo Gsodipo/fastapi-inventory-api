@@ -33,6 +33,13 @@ pipeline {
             }
         }
 
+        stage('Create Final ZIP')
+        {
+            steps {
+                bat 'venv\\Scripts\\activate && python create_final_zip.py'
+            }
+        }
+
     }
 
     post {
