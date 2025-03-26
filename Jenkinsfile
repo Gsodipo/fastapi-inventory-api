@@ -7,6 +7,13 @@ pipeline {
     }
 
     stages {
+
+       stage('Clean Workspace') {
+            steps {
+                deleteDir() // deletes everything in workspace before each build
+            }
+        }
+
         stage('Checkout Code') {
             steps {
                 git branch: 'main', url: 'https://github.com/Gsodipo/fastapi-inventory-api'
