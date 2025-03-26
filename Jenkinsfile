@@ -14,20 +14,14 @@ pipeline {
             }
         }
 
-        stage('Set Up Environment') {
+        stage('Set up Virtual Env and Install Dependencies') {
             steps {
-                // Create virtual env if it doesn’t exist (saves time!)
-                bat """
-                if not exist %VENV% (
-                    %PYTHON% -m venv %VENV%
-                )
-                """
-                // Only install dependencies if not already installed
-                bat """
-                %VENV%\\Scripts\\activate && pip install --upgrade pip && pip install -r requirements.txt
-                """
+                bat 'if not exist venv (C:\\Users\\B00134339\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -m venv venv)'
+                bat '%VENV%\\Scripts\\python.exe -m pip install --upgrade pip'
+                bat '%VENV%\\Scripts\\activate && pip install -r requirements.txt'
             }
         }
+
 
         stage('Run Tests & Generate PDF') {
             steps {
