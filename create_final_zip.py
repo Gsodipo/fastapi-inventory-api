@@ -46,3 +46,5 @@ with zipfile.ZipFile(final_zip, 'w') as zipf:
             print(f" Missing file, not added: {file}")
 
 print(f"\n Final ZIP created: {final_zip}")
+exit(0)
+
