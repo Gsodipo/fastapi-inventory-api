@@ -3,48 +3,55 @@ pipeline {
 
     environment {
         VENV = "venv"
+        PYTHON = "C:\\Users\\B00134339\\AppData\\Local\\Programs\\Python\\Python311\\python.exe"
     }
 
     stages {
-        stage('Clone Repo') {
+        stage('Checkout Code') {
             steps {
+                // No need for extra 'Clone Repo' if using `checkout scm`, but leaving your approach
                 git branch: 'main', url: 'https://github.com/Gsodipo/fastapi-inventory-api'
             }
         }
 
-        stage('Set up Virtual Env and Install Dependencies') {
+        stage('Set Up Environment') {
             steps {
-                bat 'C:\\Users\\B00134339\\AppData\\Local\\Programs\\Python\\Python311\\python.exe -m venv %VENV%'
-                bat '%VENV%\\Scripts\\activate && pip install -r requirements.txt'
+                // Create virtual env if it doesn’t exist (saves time!)
+                bat """
+                if not exist %VENV% (
+                    %PYTHON% -m venv %VENV%
+                )
+                """
+                // Only install dependencies if not already installed
+                bat """
+                %VENV%\\Scripts\\activate && pip install --upgrade pip && pip install -r requirements.txt
+                """
             }
         }
 
-        stage('Run Unit Tests & Generate PDF') 
-        {
+        stage('Run Tests & Generate PDF') {
             steps {
                 bat '%VENV%\\Scripts\\activate && python generate_test_pdf.py'
             }
         }
 
-        stage('Dump MongoDB and Zip') 
-        {
+        stage('Dump MongoDB') {
             steps {
-                bat 'venv\\Scripts\\activate && python dump_mongodb_zip.py'
+                bat '%VENV%\\Scripts\\activate && python dump_mongodb_zip.py'
             }
         }
 
-        stage('Create Final ZIP')
-        {
+        stage('Create Final ZIP') {
             steps {
-                bat 'venv\\Scripts\\activate && python create_final_zip.py'
+                // Avoid using fancy emojis in logs to prevent encoding crashes
+                bat '%VENV%\\Scripts\\activate && python create_final_zip.py'
             }
         }
-
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'unit_test_results.pdf', fingerprint: true
+            archiveArtifacts artifacts: '*.pdf', fingerprint: true
             archiveArtifacts artifacts: 'complete-*.zip', fingerprint: true
         }
     }
